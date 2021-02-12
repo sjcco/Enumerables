@@ -40,7 +40,7 @@ module Enumerable
       to_a.my_each { |x| return false unless yield(x) }
       return true
     elsif arg.nil?
-      to_a.my_each { |x| return false if x == false || x == nil }
+      to_a.my_each { |x| return false if x == false || x.nil? }
     elsif arg.is_a? Class
       to_a.my_each { |x| return false unless [x.class, x.class.superclass].include?(arg) }
     elsif arg.instance_of?(Regexp)
