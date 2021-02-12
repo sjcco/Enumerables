@@ -40,9 +40,9 @@ module Enumerable
       to_a.my_each { |x| return false unless yield(x) }
       return true
     elsif arg.nil?
-      to_a.my_each { |x| return false unless x == true }
+      to_a.my_each { |x| return false if x == false || x == nil }
     elsif arg.is_a? Class
-      to_a.my_each { |x| return false unless x.class }
+      to_a.my_each { |x| return false unless [x.class, x.class.superclass].include?(arg) }
     elsif arg.instance_of?(Regexp)
       to_a.my_each { |x| return false unless arg.match(x) }
     else
@@ -59,7 +59,7 @@ module Enumerable
     elsif arg.nil?
       to_a.my_each { |x| return true if x }
     elsif arg.is_a? Class
-      to_a.my_each { |x| return true if x.class }
+      to_a.my_each { |x| return true if [x.class, x.class.superclass].include?(arg) }
     elsif arg.instance_of?(Regexp)
       to_a.my_each { |x| return true if arg.match(x) }
     else
@@ -94,7 +94,7 @@ module Enumerable
 
   # 8. my_map
   def my_map(proc = nil)
-    return to_enum unless block_given? || !proc.nil
+    return to_enum unless block_given? || !proc.nil?
 
     new_array = []
     if proc
