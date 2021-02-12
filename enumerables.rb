@@ -114,10 +114,10 @@ module Enumerable
         arg2 = arg1
         arg1 = nil
       end
-      param2.to_sym
-      my_each { |x| arg1 = arg1.nil? ? x : arg1.send(arg2, i) }
+      arg2.to_sym
+      my_each { |x| arg1 = arg1.nil? ? x : arg1.send(arg2, x) }
     else
-      my_each { |x| arg1 = arg1.nil? ? x : yield(arg1, i) }
+      my_each { |x| arg1 = arg1.nil? ? x : yield(arg1, x) }
     end
     arg1
   end
