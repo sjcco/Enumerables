@@ -6,8 +6,8 @@ module Enumerable
     return to_enum unless block_given?
 
     i = 0
-    while i < self.to_a.length do
-      yield(self.to_a[i])
+    while i < to_a.length
+      yield(to_a[i])
       i += 1
     end
     self
@@ -18,8 +18,8 @@ module Enumerable
     return to_enum unless block_given?
 
     i = 0
-    while i < self.to_a.length do
-      yield(self.to_a[i], i)
+    while i < to_a.length
+      yield(to_a[i], i)
       i += 1
     end
     self
@@ -30,23 +30,23 @@ module Enumerable
     return to_enum unless block_given?
 
     new_array = []
-    self.to_a.my_each { |element| new_array << element if yield(element) }
+    to_a.my_each { |element| new_array << element if yield(element) }
     new_array
   end
 
   # 4. my_all?
   def my_all?(arg = nil)
     if block_given?
-      self.to_a.my_each { |x| return false unless yield(x) }
+      to_a.my_each { |x| return false unless yield(x) }
       return true
     elsif arg.nil?
-      self.to_a.my_each { |x| return false unless x == true }
+      to_a.my_each { |x| return false unless x == true }
     elsif arg.is_a? Class
-      self.to_a.my_each { |x| return false unless x.class }
-    elsif arg.class == Regexp
-      self.to_a.my_each { |x| return false unless arg.match(x) }
+      to_a.my_each { |x| return false unless x.class }
+    elsif arg.instance_of?(Regexp)
+      to_a.my_each { |x| return false unless arg.match(x) }
     else
-      self.to_a.my_each { |x| return false unless x == arg }
+      to_a.my_each { |x| return false unless x == arg }
     end
     true
   end
@@ -54,16 +54,16 @@ module Enumerable
   # 5. my_any?
   def my_any?(arg = nil)
     if block_given?
-      self.to_a.my_each { |x| return true if yield(x) }
+      to_a.my_each { |x| return true if yield(x) }
       return false
     elsif arg.nil?
-      self.to_a.my_each { |x| return true if x }
+      to_a.my_each { |x| return true if x }
     elsif arg.is_a? Class
-      self.to_a.my_each { |x| return true if x.class }
-    elsif arg.class == Regexp
-      self.to_a.my_each { |x| return true if arg.match(x) }
+      to_a.my_each { |x| return true if x.class }
+    elsif arg.instance_of?(Regexp)
+      to_a.my_each { |x| return true if arg.match(x) }
     else
-      self.to_a.my_each { |x| return true if x == arg }
+      to_a.my_each { |x| return true if x == arg }
     end
     false
   end
@@ -71,9 +71,9 @@ module Enumerable
   # 6. my_none?
   def my_none?(arg = nil)
     if block_given?
-      !self.to_a.my_any?(&Proc.new)
+      !to_a.my_any?(&Proc.new)
     else
-      !self.to_a.my_any?(arg)
+      !to_a.my_any?(arg)
     end
   end
 
@@ -82,12 +82,12 @@ module Enumerable
     count = 0
     if arg.nil?
       if block_given?
-        self.to_a.my_each { |x| count += 1 if yield(x) }
+        to_a.my_each { |x| count += 1 if yield(x) }
       else
-        count = self.to_a.length
+        count = to_a.length
       end
     else
-      count = self.to_a.my_select { |x| x == arg }.length
+      count = to_a.my_select { |x| x == arg }.length
     end
     count
   end
