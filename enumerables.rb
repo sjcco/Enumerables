@@ -106,6 +106,24 @@ module Enumerable
   end
 
   # 9. my_inject
+  def my_inject(arg1 = nil, arg2 = nil)
+    return raise LocalJumpError, 'Expecting a block or any argument' if !block_given? && arg1.nil? && arg2.nil?
+
+    if !block_given?
+      if arg2.nil?
+        arg2 = arg1
+        arg1 = nil
+      end
+      param2.to_sym
+      my_each { |x| arg1 = arg1.nil? ? x : arg1.send(arg2, i) }
+    else
+      my_each { |x| arg1 = arg1.nil? ? x : yield(arg1, i) }
+    end
+    arg1
+  end
+end
 
   # 10. multiply_els
-end
+  def multiply_els(array)
+    array.my_inject(:*)
+  end
