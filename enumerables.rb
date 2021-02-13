@@ -69,12 +69,8 @@ module Enumerable
   end
 
   # 6. my_none?
-  def my_none?(arg = nil)
-    if block_given?
-      !to_a.my_any?(&Proc.new)
-    else
-      !to_a.my_any?(arg)
-    end
+  def my_none?(args = nil, &block)
+    !my_any?(args, &block)
   end
 
   # 7. my_count?
