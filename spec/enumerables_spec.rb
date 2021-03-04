@@ -261,3 +261,27 @@ describe '#my_map' do
     end
   end
 end
+
+describe '#my_inject' do
+  let(:array) { [1, 2, 3, 4] }
+  context 'A block is given' do
+    it 'returns the value given by the block' do
+      expect(array.my_inject { |item1, item2| item1 * item2 }).to eql(24)
+    end
+  end
+  context 'A symbol is given as an argument' do
+    it 'returns the value of the operation given by the symbol' do
+      expect(array.my_inject(:+)).to eql(10)
+    end
+  end
+  context 'A string is given as an argument' do
+    it 'returns the value of the operation given by the string' do
+      expect(array.my_inject('+')).to eql(10)
+    end
+  end
+  context 'An initial value is given and a symbol is given as an argument' do
+    it 'returns the value of the operation given by the symbol with the initial value' do
+      expect(array.my_inject(5, :+)).to eql(15)
+    end
+  end
+end

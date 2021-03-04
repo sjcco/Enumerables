@@ -103,7 +103,7 @@ module Enumerable
 
   # 9. my_inject
   def my_inject(arg1 = nil, arg2 = nil)
-    return raise LocalJumpError, 'Expecting a block or any argument' if !block_given? && arg1.nil? && arg2.nil?
+    raise LocalJumpError, 'Expecting a block or any argument' if !block_given? && arg1.nil? && arg2.nil?
 
     if !block_given?
       if arg2.nil?
