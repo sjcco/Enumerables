@@ -285,3 +285,10 @@ describe '#my_inject' do
     end
   end
 end
+
+describe '#multiply_els' do
+  let(:array) { [1, 2, 3, 4, 5, 6] }
+  it 'returns the value of multiplying all elements' do
+    expect(multiply_els(array)).to eql(array.my_inject(:*))
+  end
+end
