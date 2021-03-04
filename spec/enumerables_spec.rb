@@ -38,8 +38,8 @@ describe '#my_each_with_index' do
     let(:indices) { [] }
 
     it 'calls the block for each element' do
-      array.my_each_with_index { |item, index| my_test << (item + 1) }
-      array.each_with_index { |item, index| test << (item + 1) }
+      array.my_each_with_index { |item, _index| my_test << (item + 1) }
+      array.each_with_index { |item, _index| test << (item + 1) }
       expect(my_test).to eql(test)
     end
 
@@ -50,8 +50,22 @@ describe '#my_each_with_index' do
     end
 
     it 'Returns the indices' do
-      array.my_each_with_index { |item, index| indices << index }
+      array.my_each_with_index { |_item, index| indices << index }
       expect(indices).to eql([0, 1, 2])
+    end
+  end
+end
+
+describe '#my_select' do
+  let(:array) { [1, 1, 1, 2, 3, 4] }
+  context 'No block is given' do
+    it 'returns an enumerator' do
+      expect(array.my_each_with_index).to be_an(Enumerator)
+    end
+  end
+  context 'A block is given' do
+    it 'return new array with elements that pass a condition' do
+      expect(array.my_select { |item| item > 1 }).to eql([2, 3, 4])
     end
   end
 end
