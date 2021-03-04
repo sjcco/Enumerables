@@ -69,3 +69,53 @@ describe '#my_select' do
     end
   end
 end
+
+describe '#my_all?' do
+  let(:example1) { [1, 2, 3, 4] }
+  let(:example2) { [5, 2, 3, 4] }
+  let(:example3) { [nil, 2, 3, 4] }
+  let(:example4) { %w[regex example test] }
+  let(:example5) { %w[regex example test not] }
+  let(:example6) { [3, 3, 3, 3, 3] }
+  let(:example7) { [1, 3, 3, 3, 3] }
+  context 'A block is given' do
+    it 'returns true if all elements pass a test' do
+      expect(example1.my_all? { |item| item < 5 }).to be(true)
+    end
+    it 'returns false if at lest one element does not pass the test' do
+      expect(example2.my_all? { |item| item < 5 }).to be(false)
+    end
+  end
+  context 'The argument given is nil' do
+    it 'returns true if none of the elements evaluate to false' do
+      expect(example1.my_all?).to be(true)
+    end
+    it 'returns false if at least of the elements evaluate to false' do
+      expect(example3.my_all?).to be(false)
+    end
+  end
+  context 'The argument given is a class' do
+    it 'returns true if all elements are of the same class' do
+      expect(example1.my_all?(Integer)).to be(true)
+    end
+    it 'returns false if at least one element is not of the same class' do
+      expect(example3.my_all?(Integer)).to be(false)
+    end
+  end
+  context 'The argument given is a Regexp' do
+    it 'returns true if all elements match the regexp' do
+      expect(example4.my_all?(/e/)).to be(true)
+    end
+    it 'returns false if at least one element does not match the regexp' do
+      expect(example5.my_all?(/e/)).to be(false)
+    end
+  end
+  context 'The argument given is a value' do
+    it 'return true if all elements equal argument value' do
+      expect(example6.my_all?(3)).to be(true)
+    end
+    it 'return false if at least one element is not equal argument value' do
+      expect(example7.my_all?(3)).to be(false)
+    end
+  end
+end
