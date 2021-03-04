@@ -119,3 +119,54 @@ describe '#my_all?' do
     end
   end
 end
+
+describe '#my_any?' do
+  let(:example1) { [1, 2, 3, 4] }
+  let(:example2) { [5, 6, 7, 8] }
+  let(:example3) { [nil, 2, 3, 4] }
+  let(:example4) { [false, nil, false] }
+  let(:example5) { %w[were was is] }
+  let(:example6) { %w[was is am] }
+  let(:example7) { [3, 4, 5, 6, 7] }
+  let(:example8) { [4, 5, 6, 7] }
+  context 'A block is given' do
+    it 'returns true if at lest one element pass the test' do
+      expect(example1.my_any? { |item| item < 4 }).to be(true)
+    end
+    it 'returns false if all elements fail a test' do
+      expect(example2.my_any? { |item| item < 5 }).to be(false)
+    end
+  end
+  context 'The argument given is nil' do
+    it 'returns true if at least one of the elements evaluate to true' do
+      expect(example3.my_any?).to be(true)
+    end
+    it 'returns false if none of the elements evaluate to true' do
+      expect(example4.my_any?).to be(false)
+    end
+  end
+  context 'The argument given is a class' do
+    it 'returns true if at least one element is of the same class' do
+      expect(example1.my_any?(Integer)).to be(true)
+    end
+    it 'returns false if all elements are not of the same class' do
+      expect(example1.my_any?(String)).to be(false)
+    end
+  end
+  context 'The argument given is a Regexp' do
+    it 'returns true if at least one element match the regexp' do
+      expect(example5.my_any?(/e/)).to be(true)
+    end
+    it 'returns false if all elements do not match the regexp' do
+      expect(example6.my_any?(/e/)).to be(false)
+    end
+  end
+  context 'The argument given is a value' do
+    it 'return true if  at least one element is equal to the argument value' do
+      expect(example7.my_any?(3)).to be(true)
+    end
+    it 'return false if all elements are not equal to the argument value' do
+      expect(example8.my_any?(3)).to be(false)
+    end
+  end
+end
