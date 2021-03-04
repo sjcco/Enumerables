@@ -231,12 +231,33 @@ describe '#my_count' do
   end
   context 'An argument is given' do
     it 'returns the number of times the argument appears' do
-      expect(array.my_count(2)).to eql (3)
+      expect(array.my_count(2)).to eql(3)
     end
   end
   context 'No argument and no block is given' do
     it 'returns the length of the array' do
       expect(array.my_count).to eql(array.length)
+    end
+  end
+end
+
+describe '#my_map' do
+  let(:array) { [1, 2, 3] }
+  context 'No block is given' do
+    it 'returns an enumerator' do
+      expect(array.my_map).to be_an(Enumerator)
+    end
+  end
+  context 'A block is given' do
+    let(:test) { [] }
+    it 'calls the block for each element' do
+      array.each { |item| test << (item + 1) }
+      expect(array.my_map { |item| item + 1 }).to eql(test)
+    end
+
+    it 'It modifies the original array' do
+      original_array = array
+      expect(array.my_map { |item| item + 1 }).to_not eql(original_array)
     end
   end
 end
