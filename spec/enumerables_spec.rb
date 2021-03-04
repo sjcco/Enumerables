@@ -221,3 +221,22 @@ describe '#my_none?' do
     end
   end
 end
+
+describe '#my_count' do
+  let(:array) { [1, 2, 3, 4, 2, 5, 6, 2, 7, 8] }
+  context 'A block is given' do
+    it 'return the number of elements that pass the test' do
+      expect(array.my_count { |item| item > 5 }).to eql(3)
+    end
+  end
+  context 'An argument is given' do
+    it 'returns the number of times the argument appears' do
+      expect(array.my_count(2)).to eql (3)
+    end
+  end
+  context 'No argument and no block is given' do
+    it 'returns the length of the array' do
+      expect(array.my_count).to eql(array.length)
+    end
+  end
+end
