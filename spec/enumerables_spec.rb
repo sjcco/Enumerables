@@ -1,4 +1,4 @@
-require './enumerables'
+require_relative '../enumerables'
 
 describe '#my_each' do
   let(:array) { [1, 2, 3] }
