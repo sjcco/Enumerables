@@ -28,6 +28,10 @@ Excercise to practice ruby by rebuilding the enumerables methods in ruby.
 ### Usage
 - Run ruby bubble_sort.rb 
 
+## Testing Instructions
+- In the terminal use 'rspec' to run the tests
+- For a more detailed explanation of the tests run 'rspec --format documentation'
+
 
 ## Authors
 
